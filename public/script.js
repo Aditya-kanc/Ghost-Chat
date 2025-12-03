@@ -1,4 +1,9 @@
-const socket = io();
+const storedUsername = localStorage.getItem('ghost_username');
+const socket = io({
+    auth: {
+        username: storedUsername
+    }
+});
 
 // DOM Elements
 const dashboardView = document.getElementById('dashboard-view');
@@ -64,6 +69,7 @@ function sendMessage() {
 // Socket Events
 socket.on('registration_success', (username) => {
     myUsername = username;
+    localStorage.setItem('ghost_username', username);
     myUsernameSpan.textContent = username;
     showView(dashboardView);
 });

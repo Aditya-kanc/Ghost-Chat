@@ -28,12 +28,29 @@ function generateUsername() {
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
 
-    // Auto-register
-    const username = generateUsername();
+    // Check if user has a stored username
+    let username = socket.handshake.auth.username;
+
+    if (!username || users.has(username)) {
+        // If no username or it's already taken (collision/active), generate new one
+        // Note: In a real app, we'd validate if the 'taken' username belongs to this user (reconnection)
+        // For this MVP, if it's in the map, it means someone is online with it.
+        // If it's a reconnection, the old socket should have disconnected and removed it.
+        // But if the disconnect hasn't processed yet, we might have a race condition.
+        // Simple fix: Generate new if taken.
+        if (users.has(username)) {
+            // Optional: Check if the socket ID in map is dead? 
+            // For now, just generate new to avoid conflicts.
+            username = generateUsername();
+        } else if (!username) {
+            username = generateUsername();
+        }
+    }
+
     users.set(username, socket.id);
     socketToUser.set(socket.id, username);
     socket.emit('registration_success', username);
-    console.log(`User auto-registered: ${username} (${socket.id})`);
+    console.log(`User registered: ${username} (${socket.id})`);
 
     socket.on('join_chat', (targetUsername) => {
         const myUsername = socketToUser.get(socket.id);

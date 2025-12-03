@@ -6,28 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GhostChat</title>
     <link rel="stylesheet" href="style.css">
-    <p id="dashboard-error" class="error-msg"></p>
-    </div>
-    </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
 
-    <!-- Chat View -->
-    <div id="chat-view" class="view hidden">
-        <div class="chat-header">
-            <button id="back-btn" class="icon-btn">←</button>
-            <h3>Chatting with <span id="chat-partner" class="highlight">...</span></h3>
+<body>
+    <div class="app-container">
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view active">
+            <div class="glass-card">
+                <h2>Welcome, <span id="my-username" class="highlight">...</span></h2>
+                <div class="input-group">
+                    <input type="text" id="target-username" placeholder="Enter friend's ID">
+                    <button id="connect-btn" class="secondary-btn">Connect</button>
+                </div>
+                <p id="dashboard-error" class="error-msg"></p>
+            </div>
         </div>
-        <div id="messages-container" class="messages-area">
-            <!-- Messages will appear here -->
+
+        <!-- Chat View -->
+        <div id="chat-view" class="view hidden">
+            <div class="chat-header">
+                <button id="back-btn" class="icon-btn">←</button>
+                <h3>Chatting with <span id="chat-partner" class="highlight">...</span></h3>
+            </div>
+            <div id="messages-container" class="messages-area">
+                <!-- Messages will appear here -->
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <button id="send-btn" class="send-btn">➤</button>
+            </div>
         </div>
-        <div class="chat-input-area">
-            <input type="text" id="message-input" placeholder="Type a message...">
-            <button id="send-btn" class="send-btn">➤</button>
-        </div>
-    </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
-    </body>
+</body>
 
 </html>

@@ -28,13 +28,12 @@ function generateUsername() {
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
 
-    socket.on('register', () => {
-        const username = generateUsername();
-        users.set(username, socket.id);
-        socketToUser.set(socket.id, username);
-        socket.emit('registration_success', username);
-        console.log(`User registered: ${username} (${socket.id})`);
-    });
+    // Auto-register
+    const username = generateUsername();
+    users.set(username, socket.id);
+    socketToUser.set(socket.id, username);
+    socket.emit('registration_success', username);
+    console.log(`User auto-registered: ${username} (${socket.id})`);
 
     socket.on('join_chat', (targetUsername) => {
         const myUsername = socketToUser.get(socket.id);

@@ -1,11 +1,9 @@
 const socket = io();
 
 // DOM Elements
-const registerView = document.getElementById('register-view');
 const dashboardView = document.getElementById('dashboard-view');
 const chatView = document.getElementById('chat-view');
 
-const registerBtn = document.getElementById('register-btn');
 const myUsernameSpan = document.getElementById('my-username');
 const targetUsernameInput = document.getElementById('target-username');
 const connectBtn = document.getElementById('connect-btn');
@@ -22,8 +20,8 @@ let currentChatPartner = '';
 
 // UI Navigation
 function showView(view) {
-    [registerView, dashboardView, chatView].forEach(v => v.classList.add('hidden'));
-    [registerView, dashboardView, chatView].forEach(v => v.classList.remove('active'));
+    [dashboardView, chatView].forEach(v => v.classList.add('hidden'));
+    [dashboardView, chatView].forEach(v => v.classList.remove('active'));
     view.classList.remove('hidden');
     view.classList.add('active');
 }
@@ -37,10 +35,6 @@ function addMessage(text, type) {
 }
 
 // Event Listeners
-registerBtn.addEventListener('click', () => {
-    socket.emit('register');
-});
-
 connectBtn.addEventListener('click', () => {
     const target = targetUsernameInput.value.trim().toUpperCase();
     if (target) {
